@@ -3,8 +3,8 @@ from pathlib import Path
 
 defaults.device = torch.device('cpu')
 
-FILE_PATH = "/home/jianshen/grab-sea/test_images" #Insert absolute path with image files
 path = Path(__file__).parent
+FILE_PATH = path/"test_images" #Insert absolute path with image files
 model_file = "best-performing-model.pkl"
 learner = load_learner(path, model_file)
 
