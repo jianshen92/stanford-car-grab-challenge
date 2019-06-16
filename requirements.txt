@@ -41,3 +41,4 @@ tqdm==4.32.1
 typing==3.6.6
 urllib3==1.25.3
 wasabi==0.2.2
+Fire==0.1.3

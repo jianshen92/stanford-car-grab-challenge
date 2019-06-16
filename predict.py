@@ -1,15 +1,18 @@
 from fastai.vision import *
 from pathlib import Path
 
+import fire
+
 defaults.device = torch.device('cpu')
 
 path = Path(__file__).parent
-FILE_PATH = path/"test_images" #Insert absolute path with image files
-model_file = "best-performing-model.pkl"
+OUTPUT_PATH = "./test.csv" # Modify this with your output csv file
+
+model_file = "best-model.pkl"
 learner = load_learner(path, model_file)
 
 
-def predict_one_image(img_path, learner):
+def predict_one_image(img_path, learner=learner):
     img_path = Path(img_path)
     image = open_image(img_path)
     pred, label, prob = learner.predict(image)
@@ -17,7 +20,7 @@ def predict_one_image(img_path, learner):
     return pred, probability
 
 
-def generate_csv_for_test_data(img_path, learner, output_fpath="./test.csv"):
+def generate_csv_for_test_data(img_path, learner=learner, output_fpath=OUTPUT_PATH):
     img_path = Path(img_path)
     fname_list = [path.parts[-1] for path in img_path.ls()]
     
@@ -39,4 +42,5 @@ def generate_csv_for_test_data(img_path, learner, output_fpath="./test.csv"):
     csv_df.to_csv(path_or_buf=output_fpath)
 
 
-generate_csv_for_test_data(FILE_PATH, learner, "./test.csv")
+if __name__ == '__main__':
+    fire.Fire()
