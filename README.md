@@ -124,7 +124,7 @@ conda install --yes --file requirements.txt
 ### Test if everything works.
 Run the following in terminal:
 ```
-python predict.py
+python predict.py test_images
 ```
 It should generate a `test.csv` with predictions based on images in `test_images` directory.
 
@@ -133,7 +133,4 @@ It should generate a `test.csv` with predictions based on images in `test_images
 #### Generate a .csv with predictions based on images in a folder
 1. Activate virtual environment.
 2. Create a fresh directory and placed all the test image in the folder. (Make sure there is nothing else other than images in the folder)
-3. In `predict.py`, replace:
-* `FILE_PATH`'s value with the absolute path string or object pointing to the folder created above.
-* `OUTPUT_PATH`'s value with the desired filename of the output csv, e.g `test.csv`
-4. Run `python predict.py` in terminal.
+3. Run `python predict.py <your_test_folder_path>` in terminal.
