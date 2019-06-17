@@ -17,7 +17,7 @@ Data consist of 8144 Training Images (80:20 Train:Validation Split) and 8041 Tes
 ## Results
 All models are evaluated with **Top-1 Accuracy** based on the test set provided [here](https://ai.stanford.edu/~jkrause/cars/car_dataset.html).
 
-Stopping Criteria for all models is **no improvement on validation loss** across 2 Cycles of training. One cycle of training refers to training with any number of epochs with the [One Cycle Policy](https://arxiv.org/abs/1803.09820).
+Stopping Criteria for all models is when **no improvement on validation loss** across 2 Cycles of training. One cycle of training refers to training with any number of epochs with the [One Cycle Policy](https://arxiv.org/abs/1803.09820).
 
 1. Comparing different image dimension (Squared Image)
 
@@ -64,7 +64,7 @@ Training done on Google Cloud Platform Deep Learning VM with GPU 16GB NVIDIA Tes
 | Training Time per epoch | 3:30 minutes |  4:10 minutes  | 5:40 minutes  |
 
 ## Discussion
-1. I chose **ResNet** as the model architecture because it has achieved State-of-the-Art results for many fine-grained image classification problem since 2015. Recent breakthrough in fine-grained image classification aren't  architectural breakthrough. [arXiv:1901.09891v2](https://arxiv.org/abs/1901.09891v2) and [arXiv:1712.01034v2](https://arxiv.org/abs/1712.01034v2) suggests improvements in data augmentation and normalization layers yield better results.
+1. I chose **ResNet** as the model architecture because it has achieved State-of-the-Art results for many fine-grained image classification problems since 2015. Recent breakthrough in fine-grained image classification are not architectural breakthrough. [arXiv:1901.09891v2](https://arxiv.org/abs/1901.09891v2) and [arXiv:1712.01034v2](https://arxiv.org/abs/1712.01034v2) suggests improvements in data augmentation and normalization layers yield better results.
 
 2. **ResNet-152** provides the best accuracy (2-3% increase) over **ResNet-50** in the expense of increased training time ( 2 minutes/epoch increase).
 
@@ -72,17 +72,17 @@ Training done on Google Cloud Platform Deep Learning VM with GPU 16GB NVIDIA Tes
 * Transfer Learning from model trained with **ImageNet images** to **Mixed-Up Stanford Car's dataset**.
 * Transfer Learning from model trained with **Mixed-Up Stanford Car's dataset** to **vanilla Stanford Car's dataset**.
 
-4. Training data are **augmented** with several permutation to improve variety of the dataset. This helps model to generalize better. Details of data augmentation are explained in the *model_training.ipynb* notebook.
+4. Training data are **augmented** with several transformations to improve variety of the dataset. This helps model to generalize better. Details of data augmentation are explained in the *Stanford Car Model Training.ipynb* notebook.
 
-5. Image with **higher resolution** trains better model. However that comes at a cost of training time. Due to time constraint I am not able to train images with higher resolution than 299x299.
+5. Images with **higher resolution** train better model. However that comes with the expense of training time. Due to time constraint I am not able to train images with higher resolution than 299x299.
 
-6. Training with image **squished** to target resolution trains better model. Automatic cropping risks deleting important features that are out of the cropping boundary. Padding introduce artefacts that lowers the training accuracy. Squished Image preserve most features, except in the scenario where the model/make of a car is mostly determined by the width:height ratio (aspect ratio) of a car.
+6. Training with images **squished** to target resolution train better model. Automatic cropping risks deleting important features that are out of the cropping boundary. Padding introduce artefacts that lowers the training accuracy. Squished Image preserve most features, except in the scenario where the model/make of a car is mostly determined by the width:height ratio (aspect ratio) of a car.
 
-7. Instead of using squared Image, I have experimented on resizing the dataset to **rectangular image** with 16:9 and 4:3 aspect ratios. The aim is to preserve features that is determined by the asepct ratio of a car. It shows a slight increase in accuracy (0.3%). However, this is only achievable because of the dataset provided are mostly in landscape. 
+7. Instead of using squared Image, I have experimented on resizing the dataset to **rectangular image** with 16:9 and 4:3 aspect ratios. The aim is to preserve features that is determined by the aspect ratio of a car. It shows a slight increase in accuracy (0.3%). However, this is only achievable because of the dataset provided are mostly in landscape. 
 
-8. Considering most **Grab** users are **mobile**, image taken are usually in portrait. Resizing a portrait image to landscape will severely distort the features of a car. Therefore, I have decided not to select rectangular model as our final model.
+8. Considering most **Grab** users are **mobile**, images taken are usually in portrait. Resizing a portrait image to landscape will severely distort the features of a car. Therefore, I have decided not to select a "rectangular" model as our final model.
   
-9. Training with images cropped with **bounding box** works significantly worse. The model trained is not able to distinguish the noise in the background and feature in the foreground in the test dataset.
+9. Training with images cropped with **bounding box** produces significantly worse results. The model trained was not able to distinguish the noise in the background and the car in the foreground well enough in the test dataset.
 
 10. Augmenting data with **[mixup](https://arxiv.org/abs/1710.09412)** yields over 2-3% increase of accuracy. 
 
@@ -125,7 +125,7 @@ pip install -r requirements.txt
 0. Activate virtual environment
 
 #### Generate a .csv with predictions based on unlabelled images in a folder
-1. Create a fresh directory and placed all the test image in the folder. (Make sure there is nothing else other than images in the folder)
+1. Create a fresh directory and place all the test images in the folder. (Make sure there is nothing else other than images in the folder)
 2. Run `python predict.py generate_csv_for_test_data --img_path=<your_test_folder_path> --output_fpath=<output_file_path>` in terminal.
 Example:
 ```
@@ -134,8 +134,8 @@ python predict.py generate_csv_for_test_data --img_path=test_images --output_fpa
 
 This will output a csv file with predictions and probability on each images.
 
-#### Populate an existing .csv with predictions and probability based on labelled images in a folder
-1. Create a fresh directory and placed all the test image in the folder. (Make sure there is nothing else other than images in the folder)
+#### Populate an existing .csv with predictions based on labelled images in a folder
+1. Create a fresh directory and place all the test images in the folder. (Make sure there is nothing else other than images in the folder)
 2. Create a csv file with two columns, `fname` for image filenames and `label` for labels of the image.
 
 | fname  | label |
@@ -154,5 +154,5 @@ Example:
 python predict.py populate_csv_for_labelled_data --csv_path=data_with_labels.csv --img_path=test_images --output_fpath=labelled.csv
 ```
 
-This will populate the csv file with predictions and probability for each image. It will also output some Accuracy, Recall, Precision, and F1-Score in the terminal.
+This will populate the csv file with predictions and probability for each image. It will also output performance metrics: Accuracy, Recall, Precision, and F1-Score in the terminal.
 
