@@ -1,4 +1,4 @@
-# stanford-car-grab-challenge
+# Stanford Car Fine Grained Image Classification (Grab Challenge)
 This repository is an attempt for the Computer Vision Challenge by Grab. 
 
 Table of Contents:
@@ -11,6 +11,8 @@ Table of Contents:
 Model is built with fast.ai v1 and PyTorch v1, trained on Google Cloud Platform's Deep Learning VM with 16GB NVIDIA Tesla T4.
 
 Data consist of 8144 Training Images (80:20 Train:Validation Split) and 8041 Test Images. Architecture used is ResNet-152 with squared image (299x299), pretrained with ImageNet. Data is augmented with several affine and perspective transformation. Mixup technique is used. Final Top-1 Accuracy is **92.53%** on Test Images.
+
+*Stanford Car Model Training.ipynb* is the notebook used to perform model training and evaluation.
 
 ## Results
 All models are evaluated with **Top-1 Accuracy** based on the test set provided [here](https://ai.stanford.edu/~jkrause/cars/car_dataset.html).
@@ -130,7 +132,9 @@ Example:
 python predict.py generate_csv_for_test_data --img_path=test_images --output_fpath=test.csv
 ```
 
-#### Populate a .csv with predictions and probability based on labelled images in a folder
+This will output a csv file with predictions and probability on each images.
+
+#### Populate an existing .csv with predictions and probability based on labelled images in a folder
 1. Create a fresh directory and placed all the test image in the folder. (Make sure there is nothing else other than images in the folder)
 2. Create a csv file with two columns, `fname` for image filenames and `label` for labels of the image.
 
@@ -150,5 +154,5 @@ Example:
 python predict.py populate_csv_for_labelled_data --csv_path=data_with_labels.csv --img_path=test_images --output_fpath=labelled.csv
 ```
 
-
+This will populate the csv file with predictions and probability for each image. It will also output some Accuracy, Recall, Precision, and F1-Score in the terminal.
 
