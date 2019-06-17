@@ -90,6 +90,7 @@ Training done on Google Cloud Platform Deep Learning VM with GPU 16GB NVIDIA Tes
 * Use of Virtual Environment such as `conda` or `virtualenv`
 * 10 GB of free disk space (To be safe). Pytorch, Fast.ai, and their dependencies takes up good amount of disk space.
 * (Optional) [Git Large File Storage](https://git-lfs.github.com/). Used for hosting model files (They are huge).
+* (Optional) GPU in machine. This will speed up the prediction by a huge margin if you are running inference on a large dataset.  
 
 ### Downloading Model File
 #### With Git LFS
@@ -108,7 +109,7 @@ git lfs pull
 ```
 in the repository directory to download the model file.
 #### Manual download
-Download the `best-performing-model.pkl` manually from github and replace the file in your local repository.
+Download the `best-model.pkl` manually from github and replace the file in your local repository.
 
 ### Setting up virtual environment
 Setup a `python >= 3.6.0` virtual environement with `conda` or `virtualenv`
@@ -117,20 +118,10 @@ with `pip`
 ```
 pip install -r requirements.txt
 ```
-with `conda`
-```
-conda install --yes --file requirements.txt
-```
-### Test if everything works.
-Run the following in terminal:
-```
-python predict.py test_images
-```
-It should generate a `test.csv` with predictions based on images in `test_images` directory.
-
 
 ### Running test script
 0. Activate virtual environment
+
 #### Generate a .csv with predictions based on unlabelled images in a folder
 1. Create a fresh directory and placed all the test image in the folder. (Make sure there is nothing else other than images in the folder)
 2. Run `python predict.py generate_csv_for_test_data --img_path=<your_test_folder_path> --output_fpath=<output_file_path>` in terminal.
