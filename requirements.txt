@@ -38,7 +38,7 @@ soupsieve==1.9.1
 spacy==2.1.4
 srsly==0.0.7
 thinc==7.0.4
-torch==1.0.0
+torch==1.1.0
 torchvision==0.3.0
 tqdm==4.32.1
 typing==3.6.6
