@@ -130,7 +130,34 @@ It should generate a `test.csv` with predictions based on images in `test_images
 
 
 ### Running test script
-#### Generate a .csv with predictions based on images in a folder
-1. Activate virtual environment.
-2. Create a fresh directory and placed all the test image in the folder. (Make sure there is nothing else other than images in the folder)
-3. Run `python predict.py <your_test_folder_path>` in terminal.
+0. Activate virtual environment
+#### Generate a .csv with predictions based on unlabelled images in a folder
+1. Create a fresh directory and placed all the test image in the folder. (Make sure there is nothing else other than images in the folder)
+2. Run `python predict.py generate_csv_for_test_data --img_path=<your_test_folder_path> --output_fpath=<output_file_path>` in terminal.
+Example:
+```
+python predict.py generate_csv_for_test_data --img_path=test_images --output_fpath=test.csv
+```
+
+#### Populate a .csv with predictions and probability based on labelled images in a folder
+1. Create a fresh directory and placed all the test image in the folder. (Make sure there is nothing else other than images in the folder)
+2. Create a csv file with two columns, `fname` for image filenames and `label` for labels of the image.
+
+| fname  | label |
+| ------------- | ------------- |  
+| 00001.jpg | Suzuki Aerio Sedan 2007  |  
+| 00002.jpg | Ferrari 458 Italia Convertible 2012  |  
+| 00003.jpg | Jeep Patriot SUV 2012  | 
+| 00004.jpg | Toyota Camry Sedan 2012  | 
+| 00005.jpg | Tesla Model S Sedan 2012  | 
+
+**IMPORTANT** : `fname` in the csv files should match exact the filename of images in the folder. (Filename only, not path)
+
+3. Run `python predict.py populate_csv_for_labelled_data --csv_path=<your_csv_path> --img_path=<your_test_folder_path> --output_fpath=<output_file_path>` in terminal.
+Example:
+```
+python predict.py populate_csv_for_labelled_data --csv_path=data_with_labels.csv --img_path=test_images --output_fpath=labelled.csv
+```
+
+
+
