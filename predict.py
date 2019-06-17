@@ -1,9 +1,9 @@
 from fastai.vision import *
 from pathlib import Path
 
-import fire
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-defaults.device = torch.device('cpu')
+import fire
 
 path = Path(__file__).parent
 OUTPUT_PATH = "./test.csv" # Modify this with your output csv file
@@ -20,7 +20,7 @@ def predict_one_image(img_path, learner=learner):
     return pred, probability
 
 
-def generate_csv_for_test_data(img_path, learner=learner, output_fpath=OUTPUT_PATH):
+def _predict_batch(img_path, learner):
     img_path = Path(img_path)
     fname_list = [path.parts[-1] for path in img_path.ls()]
     
@@ -38,8 +38,35 @@ def generate_csv_for_test_data(img_path, learner=learner, output_fpath=OUTPUT_PA
      'prediction': prediction_list,
      'probability' : probability.tolist()
     })
-    
-    csv_df.to_csv(path_or_buf=output_fpath)
+
+    return csv_df 
+
+
+def generate_csv_for_test_data(img_path, learner=learner, output_fpath=OUTPUT_PATH):
+    print('Running Inference ...')
+    test_df = _predict_batch(img_path, learner)
+    test_df.to_csv(path_or_buf=output_fpath)
+    print(f"Results saved to {output_fpath}")
+
+
+def populate_csv_for_labelled_data(csv_path, img_path, learner=learner, output_fpath="./labelled.csv"):
+    print('Running Inference ...')
+    test_df = _predict_batch(img_path, learner)
+
+    label_df = pd.read_csv(csv_path, usecols=["fname", "label"])
+
+    new_df = label_df.join(test_df.set_index('fname'), on='fname')
+    new_df.to_csv(path_or_buf=output_fpath)
+    print(f"Results saved to {output_fpath}")
+
+    print('Calculating Performance')
+    print('-----------------------')
+    accuracy = accuracy_score(new_df["label"].tolist(), new_df["prediction"].tolist())
+    precision = precision_score(new_df["label"].tolist(), new_df["prediction"].tolist(), average="weighted")
+    recall = recall_score(new_df["label"].tolist(), new_df["prediction"].tolist(), average="weighted")
+    f1 = f1_score(new_df["label"].tolist(), new_df["prediction"].tolist(), average="weighted")
+
+    print(f"Accuracy : {accuracy*100}% \nPrecision : {precision*100}% \nRecall : {recall*100}% \nf1 : {f1*100}%")
 
 
 if __name__ == '__main__':

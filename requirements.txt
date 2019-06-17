@@ -9,7 +9,9 @@ cymem==2.0.2
 dataclasses==0.6
 fastai==1.0.53.post2
 fastprogress==0.1.21
+fire==0.1.3
 idna==2.8
+joblib==0.13.2
 jsonschema==3.0.1
 kiwisolver==1.1.0
 matplotlib==3.1.0
@@ -20,7 +22,6 @@ nvidia-ml-py3==7.352.0
 packaging==19.0
 pandas==0.24.2
 Pillow==6.0.0
-pkg-resources==0.0.0
 plac==0.9.6
 preshed==2.0.1
 pyparsing==2.4.0
@@ -29,8 +30,10 @@ python-dateutil==2.8.0
 pytz==2019.1
 PyYAML==5.1.1
 requests==2.22.0
+scikit-learn==0.21.2
 scipy==1.3.0
 six==1.12.0
+sklearn==0.0
 soupsieve==1.9.1
 spacy==2.1.4
 srsly==0.0.7
@@ -41,4 +44,3 @@ tqdm==4.32.1
 typing==3.6.6
 urllib3==1.25.3
 wasabi==0.2.2
-Fire==0.1.3
