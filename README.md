@@ -64,7 +64,7 @@ Training done on Google Cloud Platform Deep Learning VM with GPU 16GB NVIDIA Tes
 | Training Time per epoch | 3:30 minutes |  4:10 minutes  | 5:40 minutes  |
 
 ## Discussion
-1. I chose **ResNet** as the model architecture because it has achieved State-of-the-Art results for many fine-grained image classification problems since 2015. Recent breakthrough in fine-grained image classification are not architectural breakthrough. [arXiv:1901.09891v2](https://arxiv.org/abs/1901.09891v2) and [arXiv:1712.01034v2](https://arxiv.org/abs/1712.01034v2) suggests improvements in data augmentation and normalization layers yield better results.
+1. I chose **ResNet** as the model architecture because it has achieved State-of-the-Art results for many fine-grained image classification problems since 2015. Recent breakthrough in fine-grained image classification such as [arXiv:1901.09891v2](https://arxiv.org/abs/1901.09891v2) and [arXiv:1712.01034v2](https://arxiv.org/abs/1712.01034v2) suggests modification in data augmentation and normalization layers, were built on top of ResNet to obtain the best results. 
 
 2. **ResNet-152** provides the best accuracy (2-3% increase) over **ResNet-50** in the expense of increased training time ( 2 minutes/epoch increase).
 
@@ -128,10 +128,10 @@ pip install -r requirements.txt
 1. Create a fresh directory and place all the test images in the folder. (Make sure there is nothing else other than images in the folder)
 2. Run `python predict.py generate_csv_for_test_data --img_path=<your_test_folder_path> --output_fpath=<output_file_path>` in terminal.
 Example:
+###### See `test_images` folder as sample
 ```
 python predict.py generate_csv_for_test_data --img_path=test_images --output_fpath=test.csv
 ```
-
 This will output a csv file with predictions and probability on each images.
 
 #### Populate an existing .csv with predictions based on labelled images in a folder
@@ -150,6 +150,7 @@ This will output a csv file with predictions and probability on each images.
 
 3. Run `python predict.py populate_csv_for_labelled_data --csv_path=<your_csv_path> --img_path=<your_test_folder_path> --output_fpath=<output_file_path>` in terminal.
 Example:
+###### See `test_images` folder and `data_with_labels.csv` as sample
 ```
 python predict.py populate_csv_for_labelled_data --csv_path=data_with_labels.csv --img_path=test_images --output_fpath=labelled.csv
 ```
