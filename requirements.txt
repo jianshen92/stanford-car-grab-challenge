@@ -11,7 +11,7 @@ fastai==1.0.53.post2
 fastprogress==0.1.21
 fire==0.1.3
 idna==2.8
-joblib==0.13.2
+joblib==1.2.0
 jsonschema==3.0.1
 kiwisolver==1.1.0
 matplotlib==3.1.0
